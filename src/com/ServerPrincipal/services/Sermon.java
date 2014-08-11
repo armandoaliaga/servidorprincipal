@@ -1,7 +1,5 @@
 package com.ServerPrincipal.services;
 
-import java.util.Date;
-
 public class Sermon {
 
 	private int id;
@@ -10,7 +8,7 @@ public class Sermon {
 	private String name_of_predicador;
 	private String descripcion;
 	private String serie;
-	private Date fecha;
+	private String fecha;
 	
 	//descripcionmensaje serie fecha foto
 	
@@ -30,7 +28,7 @@ public class Sermon {
 		this.name_of_predicador=predicador;
 	}
 	
-	public Sermon(int id,String name, int duration , String predicador,String descripcion, String serie,Date fecha)
+	public Sermon(int id,String name, int duration , String predicador,String descripcion, String serie,String fecha)
 	{
 		this.id=id;
 		this.name=name;
@@ -65,7 +63,7 @@ public class Sermon {
 		return serie;
 	}
 	
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 	
