@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.media.Duration;
 import javax.ws.rs.*;
 
 
@@ -57,6 +58,27 @@ public class V1_Sermon {
         {
     		sermones.put(String.valueOf(new_sermon.getId()), new_sermon);
         	log.info("getBook: " + new_sermon);
+        	result.add(new_sermon);        	        	        	        
+        }              
+        return result;
+    }   
+    
+    
+    @GET
+    @Path("/deleteSermon/{id}")
+    public void deleteSermon(@PathParam("id") String id) throws ParseException {    	    	                     
+        sermones.remove(id);		
+    } 
+    
+    @GET
+    @Path("/updateSermon/{id}/{name}/{name_of_predicador}/{serie}/{descripcion}/{fecha}")
+    public Collection<Sermon> updateSermon(@PathParam("id") int id,@PathParam("name") String name,@PathParam("name_of_predicador") String name_of_predicador,@PathParam("serie") String serie,@PathParam("descripcion") String descripcion,@PathParam("fecha") String fecha) throws ParseException {    	
+    	Sermon new_sermon = new Sermon(id,name,1000,name_of_predicador,descripcion,serie,fecha);
+    	Collection<Sermon> result = new ArrayList<Sermon>();
+    	
+    	if (new_sermon != null)
+        {        	
+    		sermones.put(String.valueOf(id), new_sermon);
         	result.add(new_sermon);        	        	        	        
         }              
         return result;
