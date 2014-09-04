@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import javax.media.Duration;
 import javax.ws.rs.*;
-
+import javax.ws.rs.core.Response;
 
 
 @Path("/v1")
@@ -83,4 +83,23 @@ public class V1_Sermon {
         }              
         return result;
     }   
+    
+    @GET
+    @Path("/getSermon/{id}")
+    public Sermon getPuntos(@PathParam("id") String id) {
+    	Sermon result=sermones.get(id);
+    	log.info("getSermon: " + result);
+        return result;        
+    }
+    
+    
+    @POST
+    @Path("/nuevosermon")
+    public Response createProductInJSON(Sermon product) {
+    	 
+		String result = "Product created : " + product;
+		sermones.put(String.valueOf(product.getId()), product);
+		return Response.status(201).entity(result).build();
+ 
+	}
 }
