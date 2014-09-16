@@ -1,6 +1,7 @@
 package com.ServerPrincipal.services;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -47,4 +48,29 @@ public class V1_Himno {
     public void deleteSermon(@PathParam("id") String id) throws ParseException {    	    	                     
         himnos.remove(id);		
     }   
+    
+    @GET
+    @Path("/getHimno/{id}")
+    public Himno getHimno(@PathParam("id") String id) {
+    	Himno result=himnos.get(id);
+    	log.info("getSermon: " + result);
+        return result;        
+    }
+    
+    @GET
+    @Path("/addHimno/{numero}/{name}/{lyrics}")
+    public Collection<Himno> addHimno(@PathParam("numero") String numero,@PathParam("name") String name,@PathParam("lyrics") String lyrics) throws ParseException {    	    	
+    	Himno new_himno = new Himno(himnos.get(String.valueOf(himnos.size())).getId()+1,Integer.parseInt(numero),name, lyrics);
+    	Collection<Himno> result = new ArrayList<Himno>();
+    	
+    	if (new_himno != null)
+        {
+    		
+    		himnos.put(String.valueOf(new_himno.getId()), new_himno);
+        	log.info("getBook: " + new_himno);
+        	result.add(new_himno);        	        	        	        
+        }              
+        return result;
+    }   
+    
 }
