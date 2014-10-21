@@ -9,10 +9,9 @@ public class Sermon {
 	private String descripcion;
 	private String serie;
 	private String fecha;
-	
-	//descripcionmensaje serie fecha foto
-	
-	
+	private String shareableURL="https://www.dropbox.com/s/3qhqrejv088pjd4/dbz.mp3?dl=1";
+	//https://www.dropbox.com/s/3qhqrejv088pjd4/dbz.mp3?dl=1
+	//descripcionmensaje serie fecha foto	
 	
 	public Sermon(String name, int duration , String predicador)
 	{
@@ -65,6 +64,12 @@ public class Sermon {
 	
 	public String getFecha() {
 		return fecha;
+	}
+	public String getShareableURL() {
+		return shareableURL;
+	}
+	public void setShareableURL(String shareableURL) {
+		this.shareableURL = shareableURL;
 	}
 	
 

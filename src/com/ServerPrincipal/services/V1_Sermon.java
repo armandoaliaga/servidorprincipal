@@ -6,12 +6,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.media.Duration;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+
+import com.dropbox.core.DbxAppInfo;
+import com.dropbox.core.DbxClient;
+import com.dropbox.core.DbxException;
+import com.dropbox.core.DbxRequestConfig;
 
 
 @Path("/v1")
@@ -92,6 +98,49 @@ public class V1_Sermon {
         return result;        
     }
     
+    @GET
+    @Path("/seturlSermon/{id}/{filename}")
+    public Collection<Sermon> seturlSermon(@PathParam("id") int id,@PathParam("filename") String filename) throws ParseException {    	
+    	
+    	final String APP_KEY = "8izb50c4q7igf9h";
+        final String APP_SECRET = "ksymf11y11ws3gn";
+
+        DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
+
+        DbxRequestConfig config = new DbxRequestConfig("JavaTutorial/1.0", Locale.getDefault().toString());
+    	
+        String accessToken = "FWVemrNp-3EAAAAAAAAAGgNEHLFXNCVnqPh9_jmCwLbC0I5TM8WSxArUxdS87Otu";//authFinish.accessToken;
+        
+        DbxClient client = new DbxClient(config, accessToken);
+    	
+        try {
+			System.out.println("Linked account: " + client.getAccountInfo().displayName);
+		} catch (DbxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        String ruta="";
+        try {
+			ruta=client.createShareableUrl("/"+filename);
+			System.out.println(ruta);
+		} catch (DbxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	ruta=ruta.substring(0,ruta.length()-1)+"1";
+    	
+    	Sermon new_sermon = sermones.get(String.valueOf(id));
+    	Collection<Sermon> result = new ArrayList<Sermon>();
+    	
+    	if (new_sermon != null)
+        {        	
+    		new_sermon.setShareableURL(ruta);
+    		sermones.put(String.valueOf(id), new_sermon);
+        	result.add(new_sermon);        	        	        	        
+        }              
+        return result;
+    }   
     
     @POST
     @Path("/nuevosermon")
